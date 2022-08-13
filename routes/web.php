@@ -27,6 +27,10 @@ Route::get('/', function () {
 
 
 Route::get('/homepage', [NewsController::class, 'index']);
+Route::post('/homepage',[NewsController::class, 'store'])
+->middleware(['auth', 'verified'])->name('my.store');
+Route::get('/homepage/show',[NewsController::class, 'show'])
+->middleware(['auth', 'verified'])->name('my.show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
