@@ -31,6 +31,13 @@ Route::post('/homepage',[NewsController::class, 'store'])
 ->middleware(['auth', 'verified'])->name('my.store');
 Route::get('/homepage/show',[NewsController::class, 'show'])
 ->middleware(['auth', 'verified'])->name('my.show');
+Route::get('/homepage/edit',[NewsController::class, 'edit'])
+->middleware(['auth', 'verified'])->name('my.edit');
+Route::post('/homepage/update',[NewsController::class, 'update'])
+->middleware(['auth', 'verified'])->name('my.update');
+Route::post('/homepage/delete',[NewsController::class, 'destroy'])
+->middleware(['auth', 'verified'])->name('my.delete');
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

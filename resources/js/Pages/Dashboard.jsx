@@ -1,12 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Authenticated from '@/Layouts/Authenticated';
-import { Head } from '@inertiajs/inertia-react';
+import { Head, Link } from '@inertiajs/inertia-react';
 import { Inertia } from '@inertiajs/inertia';
 
 export default function Dashboard(props) {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [category, setCategory] = useState('')
+    const [awal,setAwal] = useState(props.myNews)
     
     const handleButtonSubmit = (e) => {
         e.preventDefault()
@@ -18,12 +19,11 @@ export default function Dashboard(props) {
         setDescription('')
         setCategory('')
     }
-    
-    useEffect(() => {
-        if(!props.myNews){
+    useEffect(() => {        
+         if(awal) {
             Inertia.get('/homepage/show')
-        }
-       return
+         }
+         return;
     }, []);
     return (
         <Authenticated
@@ -64,6 +64,18 @@ export default function Dashboard(props) {
                 <p>{data.description}</p>
                 <div className="card-actions justify-end">
                     <div className="badge badge-outline">{data.category}</div> 
+                    <div className="badge badge-outline">
+                        <Link href={route('my.edit')} as="button" method="get" data={{id:data.id}}>
+                        edit
+                        </Link>
+                        </div> 
+                    <div className="badge badge-outline">
+                        <Link href={route('my.delete')} method="post" as="button" data={{id:data.id}} onClick={() => {
+                            return confirm('data ingin di hapus ?') && true
+                        }}>
+                        delete
+                        </Link>
+                        </div> 
                 </div>
                 </div>
                 </div>
